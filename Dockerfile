@@ -61,7 +61,7 @@ RUN gcc -std=c99 -O2 -flto -fomit-frame-pointer -pedantic-errors -g -D_POSIX_C_S
 FROM base as lzsa-builder
 WORKDIR /src/lzsa
 COPY tools/lzsa .
-RUN make
+RUN make CC=gcc
 
 
 # Final stage - collect all built binaries
