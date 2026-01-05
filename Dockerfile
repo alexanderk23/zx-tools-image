@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.4
 
-FROM ubuntu:22.04 as base
+FROM ubuntu:24.04 as base
 
 LABEL maintainer="ZX Spectrum Developer"
 LABEL description="Docker image for building ZX Spectrum software"
@@ -10,7 +10,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Install common build dependencies
 RUN apt-get update && \
-    apt-get install -y git build-essential wget curl gcc make autoconf automake libtool pkg-config libspectrum-dev zlib1g-dev libglib2.0-dev ca-certificates && \
+    apt-get install -y --no-install-recommends git build-essential wget curl gcc make autoconf \
+    automake libtool pkg-config libspectrum-dev zlib1g-dev libglib2.0-dev ca-certificates && \
     rm -rf /var/lib/apt/lists/*
 
 
@@ -65,14 +66,14 @@ RUN make CC=gcc
 
 
 # Final stage - collect all built binaries
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
 # Avoid interactive prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Install runtime dependencies only
 RUN apt-get update && \
-    apt-get install -y ca-certificates libspectrum8 zlib1g && \
+    apt-get install -y --no-install-recommends ca-certificates libspectrum8 zlib1g && \
     rm -rf /var/lib/apt/lists/*
 
 # Copy all built binaries from their respective builder stages

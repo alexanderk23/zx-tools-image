@@ -30,7 +30,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container:
-      image: alexanderk23/zx-tools:latest
+      image: alexanderk23/zx-tools-image:latest
     steps:
     - uses: actions/checkout@v4
     - name: Build project
