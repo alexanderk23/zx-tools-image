@@ -1,0 +1,29 @@
+# Build artifacts and temporary files
+*.o
+*.a
+*.so
+*.exe
+*.bin
+*.out
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+Thumbs.db
+._*
+
+# Logs
+*.log
+logs/
+
+# Docker build context
+!Dockerfile
+!Makefile
+!README.md
+!tools/

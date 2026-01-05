@@ -1,0 +1,18 @@
+[submodule "tools/sjasmplus"]
+	path = tools/sjasmplus
+	url = https://github.com/z00m128/sjasmplus.git
+[submodule "tools/zx0"]
+	path = tools/zx0
+	url = https://github.com/einar-saukas/ZX0.git
+[submodule "tools/fuse-emulator-utils"]
+	path = tools/fuse-emulator-utils
+	url = https://github.com/Loxrie/fuse-emulator-utils.git
+[submodule "tools/mctrd"]
+	path = tools/mctrd
+	url = https://github.com/samstyle/mctrd.git
+[submodule "tools/mhmt"]
+	path = tools/mhmt
+	url = https://github.com/lvd2/mhmt.git
+[submodule "tools/lzsa"]
+	path = tools/lzsa
+	url = https://github.com/emmanuel-marty/lzsa.git
