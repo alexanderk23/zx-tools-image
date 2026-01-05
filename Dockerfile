@@ -71,9 +71,9 @@ FROM ubuntu:24.04
 # Avoid interactive prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Install runtime dependencies only
+# Install runtime dependencies
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends ca-certificates libspectrum8 zlib1g && \
+    apt-get install -y --no-install-recommends ca-certificates libspectrum8 zlib1g make && \
     rm -rf /var/lib/apt/lists/*
 
 # Copy all built binaries from their respective builder stages

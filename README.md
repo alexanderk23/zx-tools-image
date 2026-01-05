@@ -13,37 +13,44 @@ A Docker image containing various tools for building ZX Spectrum software.
 
 ## Usage
 
-### Building the image
+### Using the image in your GitHub Actions workflow
 
-```bash
-docker build -t zx-tools .
-```
-
-### Using the image
-
-You can use this image in your GitHub Actions workflow:
+Create a `.github/workflows/build.yml` file in your project repository:
 
 ```yaml
-name: Build ZX Spectrum Software
-on: [push]
+name: Build ZX Spectrum Project
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
 jobs:
   build:
     runs-on: ubuntu-latest
     container:
-      image: alexanderk23/zx-tools-image:latest
+      image: ghcr.io/alexanderk23/zx-tools-image:latest
+
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
+
     - name: Build project
       run: |
         sjasmplus source.asm
-    - name: Compress data
-      run: |
-        zx0 data.bin data.zx0
+
     - name: Upload artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: zx-spectrum-build
         path: output.tap
+```
+
+### Building the image locally
+
+```bash
+docker build -t zx-tools-image .
 ```
 
 ## Contributing
