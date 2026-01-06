@@ -4,6 +4,28 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    reviewers:
+      - "alexanderk23"
+    assignees:
+      - "alexanderk23"
+    rebase-strategy: "auto"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    reviewers:
+      - "alexanderk23"
+    assignees:
+      - "alexanderk23"
+    rebase-strategy: "auto"
+
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    reviewers:
+      - "alexanderk23"
     assignees:
       - "alexanderk23"
     rebase-strategy: "auto"
