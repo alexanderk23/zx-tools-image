@@ -72,6 +72,13 @@ COPY tools/zxtune .
 RUN make -C apps/zxtune123 platform=linux system.zlib=1
 
 
+# psg-compressor builder stage
+FROM base as psg-compressor-builder
+WORKDIR /src/psg-compressor
+COPY tools/psg_compressor .
+RUN g++ -std=c++17 -O2 main.cpp -o /usr/local/bin/psg_packer
+
+
 # Final stage - collect all built binaries
 FROM ubuntu:24.04
 
@@ -91,6 +98,7 @@ COPY --from=mctrd-builder /src/mctrd/mctrd /usr/local/bin/
 COPY --from=mhmt-builder /usr/local/bin/mhmt /usr/local/bin/
 COPY --from=lzsa-builder /src/lzsa/lzsa /usr/local/bin/
 COPY --from=zxtune-builder /src/zxtune/apps/zxtune123/../../bin/linux/release/zxtune123 /usr/local/bin/
+COPY --from=psg-compressor-builder /usr/local/bin/psg_packer /usr/local/bin/
 
 # Create workspace directory
 WORKDIR /workspace

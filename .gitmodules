@@ -19,3 +19,6 @@
 [submodule "tools/zxtune"]
 	path = tools/zxtune
 	url = https://github.com/vitamin-caig/zxtune.git
+[submodule "tools/psg_compressor"]
+	path = tools/psg_compressor
+	url = https://github.com/vasilenkoroman/psg_compressor.git
