@@ -16,3 +16,6 @@
 [submodule "tools/lzsa"]
 	path = tools/lzsa
 	url = https://github.com/emmanuel-marty/lzsa.git
+[submodule "tools/zxtune"]
+	path = tools/zxtune
+	url = https://github.com/vitamin-caig/zxtune.git

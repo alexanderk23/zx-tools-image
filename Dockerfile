@@ -11,7 +11,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Install common build dependencies
 RUN apt-get update && \
     apt-get install -y --no-install-recommends git build-essential wget curl gcc make autoconf \
-    automake libtool pkg-config libspectrum-dev zlib1g-dev libglib2.0-dev ca-certificates && \
+    automake libtool pkg-config libspectrum-dev zlib1g-dev libglib2.0-dev ca-certificates libboost-program-options-dev libasound2-dev libpulse-dev && \
     rm -rf /var/lib/apt/lists/*
 
 
@@ -65,6 +65,13 @@ COPY tools/lzsa .
 RUN make CC=gcc
 
 
+# zxtune builder stage
+FROM base as zxtune-builder
+WORKDIR /src/zxtune
+COPY tools/zxtune .
+RUN make -C apps/zxtune123 platform=linux system.zlib=1
+
+
 # Final stage - collect all built binaries
 FROM ubuntu:24.04
 
@@ -73,7 +80,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Install runtime dependencies
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends ca-certificates libspectrum8 zlib1g make && \
+    apt-get install -y --no-install-recommends ca-certificates libspectrum8 zlib1g make libboost-program-options1.83.0 && \
     rm -rf /var/lib/apt/lists/*
 
 # Copy all built binaries from their respective builder stages
@@ -83,6 +90,7 @@ COPY --from=fuse-utils-builder /tmp/bin/ /usr/local/bin/
 COPY --from=mctrd-builder /src/mctrd/mctrd /usr/local/bin/
 COPY --from=mhmt-builder /usr/local/bin/mhmt /usr/local/bin/
 COPY --from=lzsa-builder /src/lzsa/lzsa /usr/local/bin/
+COPY --from=zxtune-builder /src/zxtune/apps/zxtune123/../../bin/linux/release/zxtune123 /usr/local/bin/
 
 # Create workspace directory
 WORKDIR /workspace

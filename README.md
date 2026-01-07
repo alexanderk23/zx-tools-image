@@ -10,6 +10,8 @@ A Docker image containing various tools for building ZX Spectrum software.
 - **[mctrd](https://github.com/samstyle/mctrd)** - A TRD disk image manipulation tool
 - **[mhmt](https://github.com/lvd2/mhmt)** - MegaLZ, Hrum and Hrust packer/unpacker
 - **[lzsa](https://github.com/emmanuel-marty/lzsa)** - A lossless data compression tool
+- **[zxtune](https://github.com/vitamin-caig/zxtune)** - Chiptunes player and tracker files utility (zxtune123)
+- **[make](https://www.gnu.org/software/make/)** - Makefile build system support
 
 ## Usage
 
