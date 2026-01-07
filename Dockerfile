@@ -76,7 +76,7 @@ RUN make -C apps/zxtune123 platform=linux system.zlib=1
 FROM base as psg-compressor-builder
 WORKDIR /src/psg-compressor
 COPY tools/psg_compressor .
-RUN g++ -std=c++17 -O2 main.cpp -o /usr/local/bin/psg_packer
+RUN g++ -std=c++17 -O2 -include memory main.cpp -o /usr/local/bin/psg_packer
 
 
 # Final stage - collect all built binaries
