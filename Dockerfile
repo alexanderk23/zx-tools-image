@@ -93,8 +93,7 @@ FROM ubuntu:24.04
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Install runtime dependencies
-RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - && \
-    apt-get update && \
+RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     libspectrum8 \
     libboost-program-options1.83.0 \
@@ -107,7 +106,6 @@ RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - && \
     perl \
     curl \
     wget && \
-    nodejs && \
     ln -s /usr/bin/python3 /usr/bin/python && \
     rm -rf /var/lib/apt/lists/*
 
