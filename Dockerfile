@@ -79,6 +79,13 @@ COPY tools/psg_compressor .
 RUN g++ -std=c++17 -O2 -include memory main.cpp -o /usr/local/bin/psg_packer
 
 
+# zmakebas builder stage
+FROM base as zmakebas-builder
+WORKDIR /src/zmakebas
+COPY tools/zmakebas .
+RUN make
+
+
 # Final stage - collect all built binaries
 FROM ubuntu:24.04
 
@@ -86,8 +93,22 @@ FROM ubuntu:24.04
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Install runtime dependencies
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends ca-certificates libspectrum8 zlib1g make libboost-program-options1.83.0 && \
+RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends \
+    libspectrum8 \
+    libboost-program-options1.83.0 \
+    ca-certificates \
+    zlib1g \
+    make \
+    git \
+    python3 \
+    python3-pip \
+    perl \
+    curl \
+    wget && \
+    nodejs && \
+    ln -s /usr/bin/python3 /usr/bin/python && \
     rm -rf /var/lib/apt/lists/*
 
 # Copy all built binaries from their respective builder stages
@@ -99,6 +120,10 @@ COPY --from=mhmt-builder /usr/local/bin/mhmt /usr/local/bin/
 COPY --from=lzsa-builder /src/lzsa/lzsa /usr/local/bin/
 COPY --from=zxtune-builder /src/zxtune/apps/zxtune123/../../bin/linux/release/zxtune123 /usr/local/bin/
 COPY --from=psg-compressor-builder /usr/local/bin/psg_packer /usr/local/bin/
+COPY --from=zmakebas-builder /src/zmakebas/zmakebas /usr/local/bin/
+
+COPY tools/trd2scl/trd2scl /usr/local/bin/
+RUN chmod +x /usr/local/bin/trd2scl
 
 # Create workspace directory
 WORKDIR /workspace

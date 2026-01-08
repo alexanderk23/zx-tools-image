@@ -7,6 +7,9 @@ A Docker image containing various tools for building ZX Spectrum software.
 ### Assemblers
 - **[sjasmplus](https://github.com/z00m128/sjasmplus)** - SjASMPlus Z80 Cross-Assembler
 
+### BASIC Tools
+- **[zmakebas](https://github.com/z00m128/zmakebas)** - Converts Spectrum BASIC programs written as text files into actual Speccy BASIC files
+
 ### Compression Tools
 - **[zx0](https://github.com/einar-saukas/ZX0)** - Optimal data compressor by Einar Saukas
 - **[lzsa](https://github.com/emmanuel-marty/lzsa)** - A lossless data compression tool by Emmanuel Marty and spke
@@ -14,6 +17,7 @@ A Docker image containing various tools for building ZX Spectrum software.
 
 ### Disk Image Tools
 - **[mctrd](https://github.com/samstyle/mctrd)** - A tool for working with ZX Spectrum disk images (TRD, SCL, TAP formats)
+- **trd2scl** - A tool to convert TRD to SCL format by Matthew Westcott
 
 ### Audio/Music Tools
 - **[zxtune123](https://github.com/vitamin-caig/zxtune)** - A chiptune conversion utility supporting various tracker formats
@@ -37,6 +41,7 @@ A Docker image containing various tools for building ZX Spectrum software.
 
 ### Build System Support
 - **[make](https://www.gnu.org/software/make/)** - Makefile build system support
+
 
 ## Usage
 

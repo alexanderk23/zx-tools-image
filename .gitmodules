@@ -22,3 +22,6 @@
 [submodule "tools/psg_compressor"]
 	path = tools/psg_compressor
 	url = https://github.com/vasilenkoroman/psg_compressor.git
+[submodule "tools/zmakebas"]
+	path = tools/zmakebas
+	url = https://github.com/z00m128/zmakebas.git
