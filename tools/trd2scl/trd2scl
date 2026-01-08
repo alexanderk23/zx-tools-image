@@ -1,0 +1,93 @@
+#!/usr/bin/perl -w
+#
+# trd2scl: convert a TRD disc image to SCL format
+# Copyright (C) 2004  Matthew Westcott
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+# 
+# Author contact information:
+#
+# E-mail: matthew@west.co.tt
+# Postal address:
+#     14 Daisy Hill Drive, Adlington, Chorley, Lancs, PR6 9NE, United Kingdom
+
+if (scalar(@ARGV) != 2) {&usage; exit}
+($trd_file, $scl_file) = @ARGV;
+
+open TRD, $trd_file or die("Couldn't open file $trd_file for reading: $!");
+binmode TRD;
+
+# read the TRD directory - a list of 16-byte entries
+@entries = ();
+while(1) {
+	read TRD, $entry, 16;
+	($filename, $extension, $start_addr, $length, $sector_count,
+		$start_sector, $start_track) = unpack("A8A1vvCCC", $entry);
+	last if ord($filename) == 0;
+	push @entries, {
+		filename => $filename,
+		extension => $extension,
+		start_addr => $start_addr,
+		len => $length,
+		sector_count => $sector_count,
+		start_sector => $start_sector,
+		start_track => $start_track
+	};
+}
+
+$scl_out = '';
+# .SCL header is "SINCLAIR" followed by the number of files
+$scl_out .= "SINCLAIR".chr(scalar @entries);
+
+# next up is a header for each of the files contained within the SCL
+foreach( @entries ) {
+	# SCL entry header is 14 bytes, listing the filename (8 bytes),
+	# extension character (1 byte), start address (2 bytes), file length (2 bytes),
+	# and number of sectors (1 byte).
+	$scl_out .= pack("A8A1vvC", $_->{'filename'}, $_->{'extension'},
+		$_->{'start_addr'}, $_->{'len'}, $_->{'sector_count'});
+}
+
+# now the sector data
+foreach( @entries ) {
+	# move to the correct track/sector position -
+	# skip 256b per sector, 16 sectors (4096 bytes) per track
+	seek TRD, ($_->{'start_track'} << 12) + ($_->{'start_sector'} << 8), 0;
+	# copy the required number of sectors
+	for( $i = 0; $i < $_->{'sector_count'}; $i++ ) {
+		read TRD, $sector, 256;
+		$scl_out .= $sector;
+	}
+}
+
+close TRD;
+
+# finally, we need a four-byte sum of all the previous bytes
+$sum = 0;
+@bytes = split //, $scl_out;
+foreach (@bytes) {$sum += ord;}
+$scl_out .= pack("N", $sum);
+
+open SCL, ">$scl_file" or die "Couldn't open $scl_file for writing: $!";
+binmode SCL;
+print SCL $scl_out;
+close SCL;
+
+sub usage {
+	print <<EOF;
+trd2scl - (c) 2004 Matthew Westcott - Convert a TRD disc image to SCL format
+Usage: trd2scl in.trd out.scl
+EOF
+}
