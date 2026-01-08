@@ -2,6 +2,8 @@
 
 A Docker image containing various tools for building ZX Spectrum software.
 
+TLDR: See **[alexanderk23/zx-tools-image-example](https://github.com/alexanderk23/zx-tools-image-example)** for a usage example.
+
 ## Included Tools
 
 ### Assemblers
