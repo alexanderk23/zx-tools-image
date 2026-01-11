@@ -25,3 +25,6 @@
 [submodule "tools/zmakebas"]
 	path = tools/zmakebas
 	url = https://github.com/z00m128/zmakebas.git
+[submodule "tools/pasmo"]
+	path = tools/pasmo
+	url = https://github.com/jounikor/pasmo.git
