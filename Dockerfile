@@ -10,7 +10,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Install common build dependencies
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends git build-essential wget curl gcc make autoconf \
+    apt-get install -y --no-install-recommends git build-essential wget curl gcc cmake make autoconf \
     automake libtool pkg-config libspectrum-dev zlib1g-dev libglib2.0-dev ca-certificates libboost-program-options-dev libasound2-dev libpulse-dev && \
     rm -rf /var/lib/apt/lists/*
 
