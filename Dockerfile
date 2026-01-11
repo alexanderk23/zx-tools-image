@@ -86,6 +86,17 @@ COPY tools/zmakebas .
 RUN make
 
 
+# pasmo builder stage
+FROM base as pasmo-builder
+WORKDIR /src/pasmo
+COPY tools/pasmo/pasmo .
+RUN mkdir -p build && \
+    cd build && \
+    cmake ../ && \
+    make && \
+    cp pasmo /usr/local/bin/
+
+
 # Final stage - collect all built binaries
 FROM ubuntu:24.04
 
@@ -119,6 +130,7 @@ COPY --from=lzsa-builder /src/lzsa/lzsa /usr/local/bin/
 COPY --from=zxtune-builder /src/zxtune/apps/zxtune123/../../bin/linux/release/zxtune123 /usr/local/bin/
 COPY --from=psg-compressor-builder /usr/local/bin/psg_packer /usr/local/bin/
 COPY --from=zmakebas-builder /src/zmakebas/zmakebas /usr/local/bin/
+COPY --from=pasmo-builder /usr/local/bin/pasmo /usr/local/bin/
 
 COPY tools/trd2scl/trd2scl /usr/local/bin/
 RUN chmod +x /usr/local/bin/trd2scl

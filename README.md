@@ -8,6 +8,7 @@ TLDR: See **[alexanderk23/zx-tools-image-example](https://github.com/alexanderk2
 
 ### Assemblers
 - **[sjasmplus](https://github.com/z00m128/sjasmplus)** - SjASMPlus Z80 Cross-Assembler
+- **[pasmo](https://github.com/jounikor/pasmo)** - Pasmo Z80 Cross-Assembler
 
 ### BASIC Tools
 - **[zmakebas](https://github.com/z00m128/zmakebas)** - Converts Spectrum BASIC programs written as text files into actual Speccy BASIC files
